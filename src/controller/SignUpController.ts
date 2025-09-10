@@ -1,12 +1,10 @@
 import { HttpRequest, HttpResponse } from '../types/Http';
+import { created } from '../utils/http';
 
 export class SignUpController {
   static async handle(request: HttpRequest): Promise<HttpResponse> {
-    return {
-      statusCode: 201,
-      body: {
-        accessToken: 'signup - token de acesso',
-      },
-    }
+    return created({
+      accessToken: "fake-signup-token",
+    });
   }
 }

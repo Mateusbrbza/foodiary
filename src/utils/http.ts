@@ -1,5 +1,17 @@
-export function ok() { }
+import { HttpResponse } from '../types/Http';
 
-export function created() { }
+export function ok(body?: Record<string, any>): HttpResponse {
+  return {
+    statusCode: 200,
+    body,
+  };
+}
 
-export function badRequest() { }
+export function created(body?: Record<string, any>): HttpResponse {
+  return {
+    statusCode: 201,
+    body,
+  };
+}
+
+export function badRequest(body?: Record<string, any>): HttpResponse { }
