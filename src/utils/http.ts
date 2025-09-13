@@ -14,4 +14,30 @@ export function created(body?: Record<string, any>): HttpResponse {
   };
 }
 
-export function badRequest(body?: Record<string, any>): HttpResponse { }
+export function badRequest(body?: Record<string, any>): HttpResponse {
+  return {
+    statusCode: 400,
+    body,
+  };
+}
+
+export function unauthorized(body?: Record<string, any>): HttpResponse {
+  return {
+    statusCode: 401,
+    body,
+  };
+}
+
+export function forbidden(body?: Record<string, any>): HttpResponse {
+  return {
+    statusCode: 403,
+    body,
+  };
+}
+
+export function internalServerError(body?: Record<string, any>): HttpResponse {
+  return {
+    statusCode: 500,
+    body,
+  };
+}

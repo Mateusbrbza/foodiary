@@ -4,7 +4,7 @@ import { created } from '../utils/http';
 export class SignUpController {
   static async handle(request: HttpRequest): Promise<HttpResponse> {
     return created({
-      accessToken: "fake-signup-token",
+      accessToken: 'fake-signup-token',
     });
   }
 }

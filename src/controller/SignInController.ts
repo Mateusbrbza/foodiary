@@ -1,10 +1,10 @@
-import { HttpRequest, HttpResponse } from "../types/Http";
-import { ok } from "../utils/http";
+import { HttpRequest, HttpResponse } from '../types/Http';
+import { ok } from '../utils/http';
 
 export class SignInController {
   static async handle(request: HttpRequest): Promise<HttpResponse> {
     return ok({
-      accessToken: "fake-signin-token",
+      accessToken: 'fake-signin-token',
     });
   }
 }
