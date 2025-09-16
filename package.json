@@ -25,6 +25,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.152"
+    "@types/aws-lambda": "^8.10.152",
+    "zod": "^4.1.8"
   }
 }
