@@ -5,7 +5,7 @@ import { badRequest, ok } from '../utils/http';
 const schema = z.object({
   email: z.email(),
   password: z.string().min(6).max(20),
-})
+});
 
 export class SignInController {
   static async handle({ body }: HttpRequest): Promise<HttpResponse> {
