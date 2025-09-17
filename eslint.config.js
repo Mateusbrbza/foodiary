@@ -15,9 +15,21 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
+      prettier,
     },
     rules: {
       ...tseslint.configs.recommended.rules,
+
+      'no-console': 'warn',
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
+      'no-debugger': 'warn',
+      'no-duplicate-case': 'error',
+      'no-empty': 'warn',
+      'no-extra-semi': 'warn',
+      'no-func-assign': 'error',
+      'no-irregular-whitespace': 'warn',
+      'no-unreachable': 'warn',
     },
   },
   prettier,
