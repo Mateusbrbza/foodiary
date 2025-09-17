@@ -4,6 +4,7 @@ import { badRequest, conflict, created } from '../utils/http';
 import { database } from '~/db';
 import { usersTable } from '~/db/schema';
 import { eq } from 'drizzle-orm';
+import { hash } from 'bcryptjs';
 
 const schema = z.object({
   goal: z.enum(['lose', 'maintain', 'gain']),
@@ -38,11 +39,14 @@ export class SignUpController {
 
     const { account, ...rest } = data;
 
+    const hashedPassword = await hash(account.password, 8);
+
     const [user] = await database
       .insert(usersTable)
       .values({
         ...rest,
         ...account,
+        password: hashedPassword,
         calories: 0,
         proteins: 0,
         carbohydrates: 0,
