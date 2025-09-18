@@ -1,28 +1,14 @@
-import z from 'zod';
 import { HttpRequest, HttpResponse } from '../types/Http';
 import { badRequest, conflict, created } from '../utils/http';
 import { database } from '~/db';
 import { usersTable } from '~/db/schema';
 import { eq } from 'drizzle-orm';
 import { hash } from 'bcryptjs';
-
-const schema = z.object({
-  goal: z.enum(['lose', 'maintain', 'gain']),
-  gender: z.enum(['male', 'female']),
-  birthDate: z.iso.date(),
-  height: z.number(),
-  weight: z.number(),
-  activityLevel: z.number().min(1).max(5),
-  account: z.object({
-    name: z.string().min(2).max(40),
-    email: z.email(),
-    password: z.string().min(6).max(20),
-  }),
-});
+import { signUpSchema } from '~/schemas/signUpSchema';
 
 export class SignUpController {
   static async handle({ body }: HttpRequest): Promise<HttpResponse> {
-    const { success, error, data } = schema.safeParse(body);
+    const { success, error, data } = signUpSchema.safeParse(body);
 
     if (!success) {
       return badRequest({ errors: error.issues });
