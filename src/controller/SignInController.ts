@@ -1,10 +1,12 @@
 import { compare } from 'bcryptjs';
+import { eq } from 'drizzle-orm';
+
+import { usersTable } from '~/db/schema';
+import { signInSchema } from '~/schemas/signInSchema';
 import { HttpRequest, HttpResponse } from '../types/Http';
 import { badRequest, ok, unauthorized } from '../utils/http';
 import { database } from '~/db';
-import { eq } from 'drizzle-orm';
-import { usersTable } from '~/db/schema';
-import { signInSchema } from '~/schemas/signInSchema';
+import { signAccessToken } from '~/lib/jwt';
 
 export class SignInController {
   static async handle({ body }: HttpRequest): Promise<HttpResponse> {
@@ -33,8 +35,10 @@ export class SignInController {
       return unauthorized({ message: 'Invalid credentials' });
     }
 
+    const accessToken = signAccessToken(user.id);
+
     return ok({
-      data,
+      accessToken,
     });
   }
 }

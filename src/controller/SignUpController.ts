@@ -5,6 +5,7 @@ import { usersTable } from '~/db/schema';
 import { eq } from 'drizzle-orm';
 import { hash } from 'bcryptjs';
 import { signUpSchema } from '~/schemas/signUpSchema';
+import { signAccessToken } from '~/lib/jwt';
 
 export class SignUpController {
   static async handle({ body }: HttpRequest): Promise<HttpResponse> {
@@ -42,8 +43,10 @@ export class SignUpController {
         id: usersTable.id,
       });
 
+    const accessToken = signAccessToken(user.id);
+
     return created({
-      userId: user.id,
+      accessToken
     });
   }
 }
