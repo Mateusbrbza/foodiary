@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import { hash } from 'bcryptjs';
 import { signUpSchema } from '~/schemas/signUpSchema';
 import { signAccessToken } from '~/lib/jwt';
+import { calculateGoals } from '~/lib/calculateGoals';
 
 export class SignUpController {
   static async handle({ body }: HttpRequest): Promise<HttpResponse> {
@@ -28,16 +29,22 @@ export class SignUpController {
 
     const hashedPassword = await hash(account.password, 8);
 
+    const goals = calculateGoals({
+      activityLevel: rest.activityLevel,
+      birthDate: new Date(rest.birthDate),
+      gender: rest.gender,
+      goal: rest.goal,
+      height: rest.height,
+      weight: rest.weight,
+    })
+
     const [user] = await database
       .insert(usersTable)
       .values({
         ...rest,
         ...account,
+        ...goals,
         password: hashedPassword,
-        calories: 0,
-        proteins: 0,
-        carbohydrates: 0,
-        fats: 0,
       })
       .returning({
         id: usersTable.id,
