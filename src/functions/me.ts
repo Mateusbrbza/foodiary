@@ -1,11 +1,11 @@
 import { APIGatewayProxyEventV2 } from "aws-lambda";
 
 import { GetMeController } from "~/controller/GetMeController";
-import { parseEvent } from "~/utils/parseEvent";
+import { parseProtectedEvent } from "~/utils/parseProtectedEvent";
 import { parseResponse } from "~/utils/parseResponse";
 
 export async function handler(event: APIGatewayProxyEventV2) {
-  const request = parseEvent(event);
+  const request = parseProtectedEvent(event);
   const response = await GetMeController.handle(request);
   return parseResponse(response);
 }

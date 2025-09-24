@@ -1,8 +1,8 @@
-import { HttpRequest, HttpResponse } from '../types/Http';
+import { HttpResponse, ProtectedHttpRequest } from '../types/Http';
 import { ok } from '../utils/http';
 
 export class GetMeController {
-  static async handle({ body }: HttpRequest): Promise<HttpResponse> {
-    return ok({ user: 'eu' })
+  static async handle({ userId }: ProtectedHttpRequest): Promise<HttpResponse> {
+    return ok({ userId })
   }
 }
