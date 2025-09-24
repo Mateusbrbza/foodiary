@@ -30,6 +30,7 @@ export default [
       'no-func-assign': 'error',
       'no-irregular-whitespace': 'warn',
       'no-unreachable': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   prettier,
