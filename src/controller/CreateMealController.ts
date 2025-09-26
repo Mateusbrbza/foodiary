@@ -17,12 +17,12 @@ export class CreateMealController {
     }
 
     const [meal] = await database.insert(mealsTable).values({
+      userId,
       status: 'uploading',
       inputFileKey: 'input_file_key',
       inputType: data.fileType === 'audio/m4a' ? 'audio' : 'image',
       name: '',
       icon: '',
-      userId,
       foods: [],
     }).returning({ id: mealsTable.id });
 
