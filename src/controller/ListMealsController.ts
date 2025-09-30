@@ -1,8 +1,8 @@
+import z from 'zod';
 import { database } from '~/db';
 import { HttpResponse, ProtectedHttpRequest } from '../types/Http';
 import { badRequest, ok } from '../utils/http';
-import z from 'zod';
-import { eq } from 'drizzle-orm';
+import { and, eq, gte, lte } from 'drizzle-orm';
 import { mealsTable } from '~/db/schema';
 
 const schema = z.object({
@@ -19,6 +19,9 @@ export class ListMealsController {
       return badRequest({ errors: error.issues })
     }
 
+    const endDate = new Date(data.date);
+    endDate.setUTCHours(23, 59, 59, 59);
+
     const meals = await database.query.mealsTable.findMany({
       columns: {
         id: true,
@@ -27,7 +30,12 @@ export class ListMealsController {
         icon: true,
         name: true,
       },
-      where: eq(mealsTable.userId, userId),
+      where: and(
+        eq(mealsTable.userId, userId),
+        gte(mealsTable.createdAt, data.date),
+        lte(mealsTable.createdAt, endDate),
+        eq(mealsTable.status, 'success'),
+      )
     });
 
     return ok({ meals });
