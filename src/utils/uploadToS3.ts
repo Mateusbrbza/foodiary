@@ -8,7 +8,10 @@ interface UploadParams {
   expiresIn?: number;
 }
 
-export const uploadToS3 = async ({ fileType, expiresIn = 300 }: UploadParams): Promise<{ uploadUrl: string; fileKey: string }> => {
+export const uploadToS3 = async ({
+  fileType,
+  expiresIn = 300,
+}: UploadParams): Promise<{ uploadUrl: string; fileKey: string }> => {
   const fileId = randomUUID();
   const ext = fileType === 'audio/m4a' ? '.m4a' : '.jpg';
   const fileKey = `${fileId}${ext}`;
@@ -21,4 +24,3 @@ export const uploadToS3 = async ({ fileType, expiresIn = 300 }: UploadParams): P
   const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn });
   return { uploadUrl, fileKey };
 };
-
