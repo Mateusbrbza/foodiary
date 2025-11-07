@@ -27,6 +27,18 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: app-foodiary-uploads
+    MealsQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: meals-queue
+        VisibilityTimeout: 60 # seconds, not miliseconds
+        RedrivePolicy:
+          maxReceiveCount: 1
+          deadLetterTargetArn: !GetAtt MealsDLQ.Arn
+    MealsDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: meals-queue-dlq
 
 build:
   esbuild:
