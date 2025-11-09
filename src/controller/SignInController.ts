@@ -20,7 +20,7 @@ export class SignInController {
       columns: {
         id: true,
         email: true,
-        password: true
+        password: true,
       },
       where: eq(usersTable.email, data.email),
     });

@@ -1,15 +1,12 @@
-import { JwtPayload, sign, verify } from "jsonwebtoken";
+import { JwtPayload, sign, verify } from 'jsonwebtoken';
 
 export function signAccessToken(userId: string): string {
-  const accessToken = sign(
-    { sub: userId },
-    process.env.JWT_SECRET!,
-    { expiresIn: '7d' }
-  );
+  const accessToken = sign({ sub: userId }, process.env.JWT_SECRET!, {
+    expiresIn: '7d',
+  });
 
   return accessToken;
 }
-
 
 export function validateAccessToken(token: string) {
   try {

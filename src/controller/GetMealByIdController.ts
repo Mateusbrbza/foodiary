@@ -7,14 +7,17 @@ import { mealsTable } from '~/db/schema';
 
 const schema = z.object({
   mealId: z.uuid(),
-})
+});
 
 export class GetMealByIdController {
-  static async handle({ userId, params }: ProtectedHttpRequest): Promise<HttpResponse> {
-    const { success, error, data } = schema.safeParse(params)
+  static async handle({
+    userId,
+    params,
+  }: ProtectedHttpRequest): Promise<HttpResponse> {
+    const { success, error, data } = schema.safeParse(params);
 
     if (!success) {
-      return badRequest({ errors: error.issues })
+      return badRequest({ errors: error.issues });
     }
 
     const meal = await database.query.mealsTable.findFirst({
@@ -26,10 +29,7 @@ export class GetMealByIdController {
         name: true,
         status: true,
       },
-      where: and(
-        eq(mealsTable.id, data.mealId),
-        eq(mealsTable.userId, userId),
-      )
+      where: and(eq(mealsTable.id, data.mealId), eq(mealsTable.userId, userId)),
     });
 
     return ok({ meal });

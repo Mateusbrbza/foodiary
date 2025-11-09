@@ -1,10 +1,10 @@
-import { APIGatewayProxyEventV2 } from "aws-lambda";
-import { ProtectedHttpRequest } from "~/types/Http";
-import { parseEvent } from "./parseEvent";
-import { validateAccessToken } from "~/lib/jwt";
+import { APIGatewayProxyEventV2 } from 'aws-lambda';
+import { ProtectedHttpRequest } from '~/types/Http';
+import { parseEvent } from './parseEvent';
+import { validateAccessToken } from '~/lib/jwt';
 
 export function parseProtectedEvent(
-  event: APIGatewayProxyEventV2
+  event: APIGatewayProxyEventV2,
 ): ProtectedHttpRequest {
   const baseEvent = parseEvent(event);
   const { authorization } = event.headers;
@@ -23,6 +23,6 @@ export function parseProtectedEvent(
 
   return {
     ...baseEvent,
-    userId
-  }
+    userId,
+  };
 }

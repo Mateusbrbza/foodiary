@@ -17,8 +17,8 @@ export class GetMeController {
         fats: true,
       },
       where: eq(usersTable.id, userId),
-    })
+    });
 
-    return ok({ user })
+    return ok({ user });
   }
 }

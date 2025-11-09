@@ -6,17 +6,18 @@ import { and, eq, gte, lte } from 'drizzle-orm';
 import { mealsTable } from '~/db/schema';
 
 const schema = z.object({
-  date: z.iso.date().transform(dateStr => new Date(dateStr)),
-})
+  date: z.iso.date().transform((dateStr) => new Date(dateStr)),
+});
 
 export class ListMealsController {
   static async handle({
-    userId, queryParams
+    userId,
+    queryParams,
   }: ProtectedHttpRequest): Promise<HttpResponse> {
-    const { success, error, data } = schema.safeParse(queryParams)
+    const { success, error, data } = schema.safeParse(queryParams);
 
     if (!success) {
-      return badRequest({ errors: error.issues })
+      return badRequest({ errors: error.issues });
     }
 
     const endDate = new Date(data.date);
@@ -35,7 +36,7 @@ export class ListMealsController {
         gte(mealsTable.createdAt, data.date),
         lte(mealsTable.createdAt, endDate),
         eq(mealsTable.status, 'success'),
-      )
+      ),
     });
 
     return ok({ meals });

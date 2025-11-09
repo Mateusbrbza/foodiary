@@ -6,8 +6,8 @@ import {
   pgTable,
   pgEnum,
   timestamp,
-  json
-} from "drizzle-orm/pg-core";
+  json,
+} from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users', {
   id: uuid().primaryKey().defaultRandom(),
@@ -28,15 +28,14 @@ export const usersTable = pgTable('users', {
   fats: integer().notNull(),
 });
 
-export const mealStatus = pgEnum(
-  'meal_status',
-  ['uploading', 'queued', 'processing', 'success', 'failed']
-);
+export const mealStatus = pgEnum('meal_status', [
+  'uploading',
+  'processing',
+  'success',
+  'failed',
+]);
 
-export const mealInputType = pgEnum(
-  'input_type',
-  ['image', 'audio']
-);
+export const mealInputType = pgEnum('input_type', ['image', 'audio']);
 
 export const mealsTable = pgTable('meals', {
   id: uuid().primaryKey().defaultRandom(),

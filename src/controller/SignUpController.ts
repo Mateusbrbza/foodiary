@@ -36,7 +36,7 @@ export class SignUpController {
       goal: rest.goal,
       height: rest.height,
       weight: rest.weight,
-    })
+    });
 
     const [user] = await database
       .insert(usersTable)
@@ -53,7 +53,7 @@ export class SignUpController {
     const accessToken = signAccessToken(user.id);
 
     return created({
-      accessToken
+      accessToken,
     });
   }
 }
